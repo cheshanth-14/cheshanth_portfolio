@@ -42,7 +42,7 @@ export default function Hero() {
                     {/* Inner Image Container (Not Spinning) */}
                     <div className="absolute inset-[3px] rounded-full overflow-hidden border-4 border-bgPrimary bg-bgPrimary z-10 flex items-center justify-center">
                         <img
-                            src="/profile_photo.jpg"
+                            src="./profile_photo.jpg"
                             alt="Jagannithy Cheshanth"
                             className="w-full h-full object-cover object-top scale-[1.3] translate-y-1 transition-transform duration-700 group-hover:scale-[1.4]"
                         />
