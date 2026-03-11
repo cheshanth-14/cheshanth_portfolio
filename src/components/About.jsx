@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
+import TiltCard from './TiltCard';
 
 const stats = [
     { label: 'Projects Built', value: 4, suffix: '+' },
@@ -68,47 +69,58 @@ export default function About() {
                         {stats.map((stat, index) => (
                             <motion.div
                                 key={stat.label}
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                initial={{ opacity: 0, scale: 0.5, rotateY: -30 }}
+                                whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.15, type: "spring", stiffness: 100 }}
-                                whileHover={{ y: -5, scale: 1.05 }}
-                                className="glass-card p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-2 group hover:border-accentTeal/50 transition-all duration-300 relative overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+                                style={{ perspective: '800px' }}
                             >
-                                <div className="absolute inset-0 bg-accentTeal/5 blur-xl group-hover:bg-accentTeal/20 transition-all duration-500 rounded-2xl -z-10" />
-                                <h3 className="text-4xl font-black text-accentTeal font-mono drop-shadow-[0_0_10px_rgba(0,245,212,0.3)] group-hover:drop-shadow-[0_0_15px_rgba(0,245,212,0.8)] transition-all">
-                                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                                </h3>
-                                <p className="text-sm text-textMuted font-medium tracking-wide group-hover:text-white transition-colors">
-                                    {stat.label}
-                                </p>
+                                <TiltCard
+                                    className="glass-card p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-2 group hover:border-accentTeal/50 transition-all duration-300 relative overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+                                    glowColor="rgba(0, 245, 212, 0.15)"
+                                    intensity={15}
+                                >
+                                    <div className="absolute inset-0 bg-accentTeal/5 blur-xl group-hover:bg-accentTeal/20 transition-all duration-500 rounded-2xl -z-10" />
+                                    <h3 className="text-4xl font-black text-accentTeal font-mono drop-shadow-[0_0_10px_rgba(0,245,212,0.3)] group-hover:drop-shadow-[0_0_15px_rgba(0,245,212,0.8)] transition-all">
+                                        <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                                    </h3>
+                                    <p className="text-sm text-textMuted font-medium tracking-wide group-hover:text-white transition-colors">
+                                        {stat.label}
+                                    </p>
+                                </TiltCard>
                             </motion.div>
                         ))}
                     </motion.div>
 
                     {/* Bio Text */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, x: 50, rotateY: 10 }}
+                        whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden"
+                        style={{ perspective: '1000px' }}
                     >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-accentViolet/10 blur-[80px] -z-10" />
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-accentAmber/10 blur-[80px] -z-10" />
+                        <TiltCard
+                            className="glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden"
+                            glowColor="rgba(124, 58, 237, 0.15)"
+                            intensity={8}
+                        >
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-accentViolet/10 blur-[80px] -z-10" />
+                            <div className="absolute bottom-0 left-0 w-32 h-32 bg-accentAmber/10 blur-[80px] -z-10" />
 
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-                            className="text-lg lg:text-xl text-textPrimary leading-relaxed font-light"
-                        >
-                            I'm a motivated Computer Science undergraduate at the <span className="text-accentTeal font-medium">Information Institute of Technology</span> in Sri Lanka, affiliated with the <span className="text-accentViolet font-medium">University of Westminster</span> in the UK.
-                        </motion.p>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }}
-                            className="text-lg lg:text-xl text-textMuted leading-relaxed font-light mt-6"
-                        >
-                            Passionate about learning new technologies, working with professionals, and growing as a developer to do creative work in the tech industry. I blend technical logic with creative problem-solving to build applications that are not only functional but <span className="text-accentAmber font-medium drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">unforgettable</span>.
-                        </motion.p>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
+                                className="text-lg lg:text-xl text-textPrimary leading-relaxed font-light"
+                            >
+                                I'm a motivated Computer Science undergraduate at the <span className="text-accentTeal font-medium">Information Institute of Technology</span> in Sri Lanka, affiliated with the <span className="text-accentViolet font-medium">University of Westminster</span> in the UK.
+                            </motion.p>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }}
+                                className="text-lg lg:text-xl text-textMuted leading-relaxed font-light mt-6"
+                            >
+                                Passionate about learning new technologies, working with professionals, and growing as a developer to do creative work in the tech industry. I blend technical logic with creative problem-solving to build applications that are not only functional but <span className="text-accentAmber font-medium drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">unforgettable</span>.
+                            </motion.p>
+                        </TiltCard>
                     </motion.div>
 
                 </div>

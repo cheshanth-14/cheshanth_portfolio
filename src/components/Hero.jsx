@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub, FiInstagram, FiLinkedin, FiDownload, FiChevronDown } from 'react-icons/fi';
+import HeroScene3D from './HeroScene3D';
 
 const roles = [
     "Computer Science Undergraduate",
@@ -22,19 +23,23 @@ export default function Hero() {
 
     return (
         <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-            {/* Animated Background Orbs */}
+            {/* 3D Animated Background Scene */}
+            <HeroScene3D />
+
+            {/* Animated Background Orbs (kept for color ambiance) */}
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accentTeal/20 rounded-full blur-[120px] animate-spin-slow" />
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accentViolet/20 rounded-full blur-[120px] animate-spin-slow shadow-[0_0_50px_rgba(124,58,237,0.5)]" style={{ animationDirection: 'reverse', animationDuration: '12s' }} />
 
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-16 w-full z-10 flex flex-col lg:flex-row-reverse items-center justify-between gap-12 text-center lg:text-left">
 
-                {/* Profile Photo */}
+                {/* Profile Photo with 3D hover */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
                     transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.8 }}
-                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    whileHover={{ scale: 1.05, rotate: 2, rotateY: 10 }}
                     className="relative group w-40 h-40 sm:w-48 sm:h-48 lg:w-72 lg:h-72 shrink-0"
+                    style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
                 >
                     {/* Spinning Gradient Border */}
                     <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-accentTeal via-accentViolet to-accentAmber animate-spin-slow" style={{ animationDuration: '4s' }}></div>
@@ -50,6 +55,10 @@ export default function Hero() {
 
                     {/* Hover Glow */}
                     <div className="absolute inset-0 rounded-full bg-accentTeal/20 blur-2xl -z-10 group-hover:bg-accentViolet/40 transition-colors duration-500"></div>
+
+                    {/* 3D floating ring effect */}
+                    <div className="absolute inset-[-20px] rounded-full border border-accentTeal/10 animate-spin-slow" style={{ animationDuration: '6s' }} />
+                    <div className="absolute inset-[-35px] rounded-full border border-accentViolet/5 animate-spin-slow" style={{ animationDuration: '10s', animationDirection: 'reverse' }} />
                 </motion.div>
 
                 {/* Text Content */}
@@ -72,10 +81,12 @@ export default function Hero() {
                         <div className="h-12 flex items-center justify-center lg:justify-start">
                             <motion.p
                                 key={currentRole}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
+                                initial={{ opacity: 0, y: 20, rotateX: -90 }}
+                                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                                exit={{ opacity: 0, y: -20, rotateX: 90 }}
+                                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                                 className="text-xl sm:text-2xl text-textMuted font-medium"
+                                style={{ perspective: '600px' }}
                             >
                                 {roles[currentRole]}
                             </motion.p>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowUp } from 'react-icons/fi';
 
+import ParticleField from './components/ParticleField';
+import SectionDivider3D from './components/SectionDivider3D';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -34,17 +36,28 @@ function App() {
     <div className="min-h-screen bg-bgPrimary text-textPrimary font-sans relative overflow-x-hidden">
       <div className="noise-overlay" />
 
+      {/* Global 3D Particle Field Background */}
+      <ParticleField />
+
       <Navbar />
 
-      <main>
+      <main className="relative z-10">
         <Hero />
+        <SectionDivider3D color="#00F5D4" />
         <About />
+        <SectionDivider3D color="#7C3AED" />
         <Education />
+        <SectionDivider3D color="#F59E0B" />
         <Skills />
+        <SectionDivider3D color="#00F5D4" />
         <Projects />
+        <SectionDivider3D color="#7C3AED" />
         <Achievements />
+        <SectionDivider3D color="#F59E0B" />
         <Languages />
+        <SectionDivider3D color="#00F5D4" />
         <References />
+        <SectionDivider3D color="#7C3AED" />
         <Contact />
       </main>
 

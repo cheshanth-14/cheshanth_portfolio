@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SkillsOrbit3D from './SkillsOrbit3D';
 
 const techSkills = [
     { name: 'React', level: 70 },
@@ -32,7 +33,7 @@ export default function Skills() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="mb-16 text-center lg:text-left"
+                    className="mb-0 text-center lg:text-left"
                 >
                     <h2 className="text-4xl lg:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-accentTeal to-accentViolet inline-block">
                         Technical & Soft Skills
@@ -40,7 +41,18 @@ export default function Skills() {
                     <div className="w-32 h-1 bg-accentAmber mt-4 mx-auto lg:mx-0 rounded-full drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
                 </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                {/* 3D Skills Orbit Visualization */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="mb-0 hidden lg:block"
+                >
+                    <SkillsOrbit3D />
+                </motion.div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 -mt-6">
 
                     {/* Technical Skills */}
                     <div className="space-y-6">
@@ -93,12 +105,13 @@ export default function Skills() {
                                 {softSkills.map((skill, index) => (
                                     <motion.div
                                         key={skill}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
+                                        whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.4, delay: index * 0.1 }}
-                                        whileHover={{ y: -3, scale: 1.05 }}
+                                        whileHover={{ y: -3, scale: 1.05, rotateY: 5 }}
                                         className="glass-card px-5 py-3 rounded-full text-sm font-medium text-textPrimary hover:border-accentViolet/50 hover:shadow-[0_0_15px_rgba(124,58,237,0.2)] transition-all cursor-default"
+                                        style={{ perspective: '600px' }}
                                     >
                                         {skill}
                                     </motion.div>
@@ -116,12 +129,13 @@ export default function Skills() {
                                 {tools.map((tool, index) => (
                                     <motion.div
                                         key={tool}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
+                                        initial={{ opacity: 0, y: 20, rotateX: -20 }}
+                                        whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.4, delay: index * 0.1 }}
-                                        whileHover={{ y: -3, scale: 1.1, rotate: [0, -2, 2, 0] }}
+                                        whileHover={{ y: -3, scale: 1.1, rotateX: 5, rotateY: 5 }}
                                         className="px-4 py-2 bg-textMuted/10 text-textMuted text-sm font-mono border border-textMuted/20 rounded-md hover:text-white hover:border-accentAmber/50 hover:shadow-[0_0_15px_rgba(245,158,11,0.4)] transition-all cursor-default"
+                                        style={{ perspective: '600px' }}
                                     >
                                         {tool}
                                     </motion.div>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import TiltCard from './TiltCard';
 
 const educationData = [
     {
@@ -20,6 +21,12 @@ const educationData = [
         color: "accentAmber"
     }
 ];
+
+const glowColors = {
+    accentTeal: 'rgba(0, 245, 212, 0.15)',
+    accentViolet: 'rgba(124, 58, 237, 0.15)',
+    accentAmber: 'rgba(245, 158, 11, 0.15)',
+};
 
 export default function Education() {
     return (
@@ -51,11 +58,12 @@ export default function Education() {
                         return (
                             <motion.div
                                 key={item.degree}
-                                initial={{ opacity: 0, x: isEven ? -50 : 50, y: 30 }}
-                                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                                initial={{ opacity: 0, x: isEven ? -50 : 50, y: 30, rotateY: isEven ? -15 : 15 }}
+                                whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay }}
                                 className="mb-12 relative flex w-full flex-col lg:flex-row items-center"
+                                style={{ perspective: '1200px' }}
                             >
                                 {/* Timeline Orb */}
                                 <div className="absolute -left-[35px] lg:left-1/2 top-4 lg:-translate-x-1/2 w-6 h-6 rounded-full bg-bgPrimary border-4 border-bgPrimary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(255,255,255,0.5)]">
@@ -64,9 +72,10 @@ export default function Education() {
 
                                 {/* Card container */}
                                 <div className={`w-full lg:w-[45%] ${isEven ? 'lg:mr-auto lg:pr-12' : 'lg:ml-auto lg:pl-12'}`}>
-                                    <motion.div
-                                        whileHover={{ scale: 1.02 }}
+                                    <TiltCard
                                         className={`glass-card p-6 lg:p-8 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] border-l-4 lg:border-l-0 ${!isEven ? 'lg:border-l-4' : 'lg:border-r-4'}`}
+                                        glowColor={glowColors[item.color]}
+                                        intensity={10}
                                         style={{
                                             borderColor: `rgba(255,255,255,0.05)`,
                                             [isEven ? 'borderRightColor' : 'borderLeftColor']: `var(--${item.color})`
@@ -87,7 +96,7 @@ export default function Education() {
                                             <span className={`w-1.5 h-1.5 rounded-full bg-${item.color}`}></span>
                                             {item.institution}
                                         </p>
-                                    </motion.div>
+                                    </TiltCard>
                                 </div>
 
                             </motion.div>

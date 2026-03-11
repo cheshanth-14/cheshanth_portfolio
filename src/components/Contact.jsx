@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiGithub, FiInstagram, FiLinkedin } from 'react-icons/fi';
+import TiltCard from './TiltCard';
+import ContactScene3D from './ContactScene3D';
 
 const contactInfo = [
     {
@@ -25,15 +27,24 @@ const contactInfo = [
     }
 ];
 
+const glowColors = {
+    accentTeal: 'rgba(0, 245, 212, 0.2)',
+    accentViolet: 'rgba(124, 58, 237, 0.2)',
+    accentAmber: 'rgba(245, 158, 11, 0.2)',
+};
+
 export default function Contact() {
     return (
         <section id="contact" className="py-24 relative overflow-hidden z-10">
 
-            {/* Animated Gradient Mesh Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-bgPrimary via-[#0t1a2f] to-[#12052c] -z-20 opacity-80" />
+            {/* 3D Animated Background */}
+            <ContactScene3D />
+
+            {/* Gradient Mesh Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-bgPrimary via-[#0a1a2f] to-[#12052c] -z-20 opacity-80" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[600px] bg-gradient-to-tr from-accentTeal/20 via-accentViolet/20 to-accentAmber/20 blur-[150px] -z-10 animate-pulse" style={{ animationDuration: '6s' }} />
 
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-16 lg:px-8 text-center sm:text-left">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-16 text-center sm:text-left relative z-10">
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -54,26 +65,31 @@ export default function Contact() {
                     {contactInfo.map((info, index) => (
                         <motion.div
                             key={info.title}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, y: 30, rotateX: -15 }}
+                            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            whileHover={{ y: -5 }}
-                            className="glass-card p-6 rounded-2xl flex flex-col items-center sm:items-start text-center sm:text-left group border border-white/10 hover:border-white/20 transition-all duration-300 relative overflow-hidden"
+                            style={{ perspective: '1000px' }}
                         >
-                            <div className={`absolute top-0 right-0 w-24 h-24 bg-${info.color}/10 blur-2xl group-hover:bg-${info.color}/20 transition-all duration-500 rounded-full`} />
+                            <TiltCard
+                                className="glass-card p-6 rounded-2xl flex flex-col items-center sm:items-start text-center sm:text-left group border border-white/10 hover:border-white/20 transition-all duration-300 relative overflow-hidden"
+                                glowColor={glowColors[info.color]}
+                                intensity={10}
+                            >
+                                <div className={`absolute top-0 right-0 w-24 h-24 bg-${info.color}/10 blur-2xl group-hover:bg-${info.color}/20 transition-all duration-500 rounded-full`} />
 
-                            <div className={`text-${info.color} mb-4 p-3 bg-bgPrimary/60 rounded-xl shadow-inner group-hover:drop-shadow-[0_0_8px_var(--${info.color})] transition-all`}>
-                                {info.icon}
-                            </div>
+                                <div className={`text-${info.color} mb-4 p-3 bg-bgPrimary/60 rounded-xl shadow-inner group-hover:drop-shadow-[0_0_8px_var(--${info.color})] transition-all`}>
+                                    {info.icon}
+                                </div>
 
-                            <h3 className="text-lg font-heading font-bold text-textPrimary mb-2">
-                                {info.title}
-                            </h3>
+                                <h3 className="text-lg font-heading font-bold text-textPrimary mb-2">
+                                    {info.title}
+                                </h3>
 
-                            <a href={info.href} target={info.title === "Location" ? "_blank" : "_self"} rel="noopener noreferrer" className="text-sm font-mono text-textMuted hover:text-white transition-colors truncate w-full">
-                                {info.value}
-                            </a>
+                                <a href={info.href} target={info.title === "Location" ? "_blank" : "_self"} rel="noopener noreferrer" className="text-sm font-mono text-textMuted hover:text-white transition-colors truncate w-full">
+                                    {info.value}
+                                </a>
+                            </TiltCard>
                         </motion.div>
                     ))}
                 </div>

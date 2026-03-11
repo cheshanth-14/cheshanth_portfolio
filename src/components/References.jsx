@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiPhone, FiMail } from 'react-icons/fi';
+import TiltCard from './TiltCard';
 
 const refs = [
     {
@@ -9,7 +10,8 @@ const refs = [
         email: "laashan.m@iit.ac.lk",
         bgClass: "from-accentTeal/10 to-transparent",
         borderClass: "border-accentTeal/30 hover:border-accentTeal",
-        textClass: "text-accentTeal"
+        textClass: "text-accentTeal",
+        glowColor: "rgba(0, 245, 212, 0.15)"
     },
     {
         name: "Virginiya Nathan",
@@ -18,14 +20,15 @@ const refs = [
         email: "virginnathan@gmail.com",
         bgClass: "from-accentViolet/10 to-transparent",
         borderClass: "border-accentViolet/30 hover:border-accentViolet",
-        textClass: "text-accentViolet"
+        textClass: "text-accentViolet",
+        glowColor: "rgba(124, 58, 237, 0.15)"
     }
 ];
 
 export default function References() {
     return (
         <section id="references" className="py-24 relative z-10">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-16 lg:px-8">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -44,39 +47,44 @@ export default function References() {
                     {refs.map((ref, index) => (
                         <motion.div
                             key={ref.name}
-                            initial={{ opacity: 0, x: index === 0 ? -50 : 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, x: index === 0 ? -50 : 50, rotateY: index === 0 ? -10 : 10 }}
+                            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, delay: index * 0.2 }}
-                            whileHover={{ y: -5 }}
-                            className={`glass-card p-8 rounded-3xl relative overflow-hidden group transition-all duration-300 border ${ref.borderClass} hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.05)]`}
+                            style={{ perspective: '1200px' }}
                         >
-                            <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl ${ref.bgClass} rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
+                            <TiltCard
+                                className={`glass-card p-8 rounded-3xl relative overflow-hidden group transition-all duration-300 border ${ref.borderClass} hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.05)]`}
+                                glowColor={ref.glowColor}
+                                intensity={10}
+                            >
+                                <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl ${ref.bgClass} rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
 
-                            <div className="relative z-10">
-                                <h3 className="text-2xl font-heading font-bold text-textPrimary mb-1">
-                                    {ref.name}
-                                </h3>
-                                <p className={`text-sm font-mono ${ref.textClass} mb-6 tracking-wide`}>
-                                    {ref.role}
-                                </p>
+                                <div className="relative z-10">
+                                    <h3 className="text-2xl font-heading font-bold text-textPrimary mb-1">
+                                        {ref.name}
+                                    </h3>
+                                    <p className={`text-sm font-mono ${ref.textClass} mb-6 tracking-wide`}>
+                                        {ref.role}
+                                    </p>
 
-                                <div className="space-y-4">
-                                    <a href={`tel:${ref.phone.replace(/\s+/g, '')}`} className="flex items-center gap-4 text-textMuted hover:text-white transition-colors group/link p-2 -ml-2 rounded-lg hover:bg-white/5">
-                                        <div className={`p-2 rounded-lg bg-bgPrimary border border-white/5 shadow-inner group-hover/link:shadow-[0_0_10px_var(--tw-shadow-color)] shadow-${ref.textClass.split('-')[1]}/50 transition-shadow`}>
-                                            <FiPhone className={ref.textClass} />
-                                        </div>
-                                        <span>{ref.phone}</span>
-                                    </a>
+                                    <div className="space-y-4">
+                                        <a href={`tel:${ref.phone.replace(/\s+/g, '')}`} className="flex items-center gap-4 text-textMuted hover:text-white transition-colors group/link p-2 -ml-2 rounded-lg hover:bg-white/5">
+                                            <div className={`p-2 rounded-lg bg-bgPrimary border border-white/5 shadow-inner group-hover/link:shadow-[0_0_10px_var(--tw-shadow-color)] shadow-${ref.textClass.split('-')[1]}/50 transition-shadow`}>
+                                                <FiPhone className={ref.textClass} />
+                                            </div>
+                                            <span>{ref.phone}</span>
+                                        </a>
 
-                                    <a href={`mailto:${ref.email}`} className="flex items-center gap-4 text-textMuted hover:text-white transition-colors group/link p-2 -ml-2 rounded-lg hover:bg-white/5">
-                                        <div className={`p-2 rounded-lg bg-bgPrimary border border-white/5 shadow-inner group-hover/link:shadow-[0_0_10px_var(--tw-shadow-color)] shadow-${ref.textClass.split('-')[1]}/50 transition-shadow`}>
-                                            <FiMail className={ref.textClass} />
-                                        </div>
-                                        <span>{ref.email}</span>
-                                    </a>
+                                        <a href={`mailto:${ref.email}`} className="flex items-center gap-4 text-textMuted hover:text-white transition-colors group/link p-2 -ml-2 rounded-lg hover:bg-white/5">
+                                            <div className={`p-2 rounded-lg bg-bgPrimary border border-white/5 shadow-inner group-hover/link:shadow-[0_0_10px_var(--tw-shadow-color)] shadow-${ref.textClass.split('-')[1]}/50 transition-shadow`}>
+                                                <FiMail className={ref.textClass} />
+                                            </div>
+                                            <span>{ref.email}</span>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            </TiltCard>
                         </motion.div>
                     ))}
                 </div>

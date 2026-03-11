@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import TiltCard from './TiltCard';
 
 const achievements = [
     {
@@ -52,6 +53,12 @@ const achievements = [
     }
 ];
 
+const glowColors = {
+    accentTeal: 'rgba(0, 245, 212, 0.2)',
+    accentViolet: 'rgba(124, 58, 237, 0.2)',
+    accentAmber: 'rgba(245, 158, 11, 0.2)',
+};
+
 export default function Achievements() {
     return (
         <section id="achievements" className="py-24 relative z-10">
@@ -75,31 +82,36 @@ export default function Achievements() {
                     {achievements.map((item, index) => (
                         <motion.div
                             key={item.title}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
+                            whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ y: -5 }}
-                            className={`glass-card p-6 rounded-2xl flex flex-col group relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_var(--${item.glow})]`}
-                            style={{ '--hover-color': `var(--${item.glow})` }}
+                            style={{ perspective: '1000px' }}
                         >
-                            <div className="absolute inset-0 bg-white/0 group-hover:bg-[var(--hover-color)]/10 transition-colors duration-500 rounded-2xl -z-10" />
+                            <TiltCard
+                                className={`glass-card p-6 rounded-2xl flex flex-col group relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_var(--${item.glow})] h-full`}
+                                glowColor={glowColors[item.glow]}
+                                intensity={12}
+                                style={{ '--hover-color': `var(--${item.glow})` }}
+                            >
+                                <div className="absolute inset-0 bg-white/0 group-hover:bg-[var(--hover-color)]/10 transition-colors duration-500 rounded-2xl -z-10" />
 
-                            <div className="text-4xl mb-4 p-3 bg-bgPrimary/50 rounded-xl inline-flex w-fit shadow-inner group-hover:scale-110 transition-transform">
-                                {item.icon}
-                            </div>
+                                <div className="text-4xl mb-4 p-3 bg-bgPrimary/50 rounded-xl inline-flex w-fit shadow-inner group-hover:scale-110 transition-transform">
+                                    {item.icon}
+                                </div>
 
-                            <h3 className="text-lg font-heading font-bold text-textPrimary group-hover:text-[var(--hover-color)] transition-colors mb-1">
-                                {item.title}
-                            </h3>
+                                <h3 className="text-lg font-heading font-bold text-textPrimary group-hover:text-[var(--hover-color)] transition-colors mb-1">
+                                    {item.title}
+                                </h3>
 
-                            <span className="text-xs font-mono text-[var(--hover-color)] mb-3 bg-[var(--hover-color)]/10 px-2 py-0.5 rounded-full w-fit border border-[var(--hover-color)]/20 shadow-sm">
-                                {item.subtitle}
-                            </span>
+                                <span className="text-xs font-mono text-[var(--hover-color)] mb-3 bg-[var(--hover-color)]/10 px-2 py-0.5 rounded-full w-fit border border-[var(--hover-color)]/20 shadow-sm">
+                                    {item.subtitle}
+                                </span>
 
-                            <p className="text-sm text-textMuted mt-auto">
-                                {item.desc}
-                            </p>
+                                <p className="text-sm text-textMuted mt-auto">
+                                    {item.desc}
+                                </p>
+                            </TiltCard>
                         </motion.div>
                     ))}
                 </div>
